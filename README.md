@@ -1,4 +1,4 @@
-# Bento Portfolio
+# Portfolio
 
 A modern, interactive portfolio built with React and a bento grid layout. Features a responsive bento box design with smooth animations, internationalization support, and an interactive 3D globe.
 
