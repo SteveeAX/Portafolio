@@ -12,8 +12,10 @@ interface BentoCardProps {
   dataId?: string;
   isVisible?: boolean;
   noPadding?: boolean;
-  index?: number; // For staggered entrance animation
+  index?: number;
 }
+
+const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
 
 export const BentoCard: React.FC<BentoCardProps> = ({
   children,
@@ -28,27 +30,20 @@ export const BentoCard: React.FC<BentoCardProps> = ({
   index = 0
 }) => {
   const cardRef = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(cardRef, { once: true, margin: "-100px" });
-  
-  // Mouse tracking for 3D tilt
+  const isInView = useInView(cardRef, { once: true, margin: "-80px" });
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
   const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
   const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
-
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["1.5deg", "-1.5deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-1.5deg", "1.5deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!onClick || !cardRef.current) return;
+    if (isTouchDevice || !onClick || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
     x.set(xPct);
     y.set(yPct);
   };
@@ -59,7 +54,7 @@ export const BentoCard: React.FC<BentoCardProps> = ({
   };
 
   const baseClasses = `relative overflow-hidden rounded-[20px] sm:rounded-[28px] md:rounded-[32px] text-left transition-[background-color,box-shadow,border-color] duration-300 group select-none
-      bg-card backdrop-blur-xl shadow-[0_1px_2px_rgba(0,0,0,0.05)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_1px_2px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-transparent dark:border-white/5 hover:border-primary/10
+      bg-card shadow-[0_1px_2px_rgba(0,0,0,0.05)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_1px_2px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-transparent dark:border-white/5 hover:border-primary/10
       ${onClick ? 'cursor-pointer hover:bg-card-hover' : ''}
   `;
 
@@ -80,75 +75,53 @@ export const BentoCard: React.FC<BentoCardProps> = ({
         }
       }}
       className={`${baseClasses} ${className}`}
-      style={{ 
-        rotateX: onClick ? rotateX : 0,
-        rotateY: onClick ? rotateY : 0,
+      style={{
+        rotateX: (!isTouchDevice && onClick) ? rotateX : 0,
+        rotateY: (!isTouchDevice && onClick) ? rotateY : 0,
         WebkitTapHighlightColor: 'transparent',
-        transformStyle: "preserve-3d",
-        willChange: "transform"
+        transformStyle: isTouchDevice ? "flat" : "preserve-3d",
+        willChange: "transform, opacity"
       }}
-      initial={{
-        opacity: 0,
-        y: 30,
-        scale: 0.95
-      }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{
         opacity: isVisible && isInView ? 1 : 0,
-        y: isInView ? 0 : 30,
-        scale: isInView ? 1 : 0.95
+        y: isInView ? 0 : 20,
       }}
-      whileHover={onClick ? { 
-        y: -4, 
+      whileHover={(!isTouchDevice && onClick) ? {
+        y: -4,
         scale: 1.01,
-        transition: { 
-          type: 'spring', 
-          stiffness: 400, 
-          damping: 25 
-        }
-      } : undefined} 
-      whileTap={onClick ? { 
+        transition: { type: 'spring', stiffness: 400, damping: 25 }
+      } : undefined}
+      whileTap={onClick ? {
         scale: 0.98,
-        transition: { 
-          type: 'spring', 
-          stiffness: 500, 
-          damping: 30 
-        }
+        transition: { type: 'spring', stiffness: 500, damping: 30 }
       } : undefined}
       transition={{
-        // Entrance animation - uses staggered delay when in view
-        opacity: { duration: 0.5, delay: isInView ? index * 0.06 : 0, ease: 'easeOut' },
-        y: { duration: 0.5, delay: isInView ? index * 0.06 : 0, ease: [0.22, 1, 0.36, 1] },
-        scale: { duration: 0.4, delay: isInView ? index * 0.06 : 0, ease: 'easeOut' },
-        // Smooth layout transition for card-to-modal expansion
-        layout: {
-          type: 'spring',
-          stiffness: 180,
-          damping: 28,
-          mass: 0.8
-        }
+        opacity: { duration: 0.4, delay: isInView ? index * 0.05 : 0, ease: 'easeOut' },
+        y: { duration: 0.4, delay: isInView ? index * 0.05 : 0, ease: [0.22, 1, 0.36, 1] },
+        layout: { type: 'spring', stiffness: 180, damping: 28, mass: 0.8 }
       }}
     >
       {backgroundImage && (
-        <m.div
+        <div
           className="absolute inset-0 bg-cover bg-[center_60%] transition-transform duration-500 ease-out group-hover:scale-110"
           style={{ backgroundImage: `url(${backgroundImage})` }}
           role="img"
-          aria-label={dataId === 'photo' ? 'Profile photo of the developer' : 'Background image'}
+          aria-label={dataId === 'photo' ? 'Profile photo' : 'Background image'}
         />
       )}
 
-      {/* Content wrapper */}
       <div className={`relative h-full flex flex-col z-10 w-full ${noPadding ? 'p-0' : 'p-4 sm:p-6 md:p-7'} ${backgroundImage ? 'text-white' : ''}`}>
         {title && (
           <h3 className={`text-[9px] sm:text-[10px] md:text-[11px] font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-auto flex items-center gap-2 ${backgroundImage ? 'text-white/70' : 'text-text-muted'} ${noPadding ? 'absolute top-4 left-4 sm:top-6 sm:left-6 md:top-7 md:left-7 z-20' : ''}`}>
             {title}
           </h3>
         )}
-        
+
         {children}
 
         {hasArrow && (
-          <div className={`absolute top-4 right-4 sm:top-6 sm:right-6 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-300 ease-out group-hover:scale-110 group-hover:rotate-45 group-hover:shadow-lg ${backgroundImage ? 'bg-white/10 border-white/20 text-white' : 'bg-white/50 dark:bg-white/5 border-border text-text-muted group-hover:border-primary/20 group-hover:text-primary'}`}>
+          <div className={`absolute top-4 right-4 sm:top-6 sm:right-6 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border transition-all duration-300 ease-out group-hover:scale-110 group-hover:rotate-45 group-hover:shadow-lg ${backgroundImage ? 'bg-white/10 border-white/20 text-white' : 'bg-white/50 dark:bg-white/5 border-border text-text-muted group-hover:border-primary/20 group-hover:text-primary'}`}>
             <ArrowUpRight size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 group-hover:scale-110" strokeWidth={2.5} />
           </div>
         )}
