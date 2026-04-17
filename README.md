@@ -2,7 +2,7 @@
 
 Portafolio personal desarrollado con React y diseño bento grid. Incluye animaciones fluidas, soporte bilingüe (ES/EN) y modo oscuro/claro.
 
-🌐 **[[steveenquiroz.vercel.app](https://portafolio-ten-pi-75.vercel.app/)]**
+🌐 **[steveenquiroz.vercel.app](https://portafolio-ten-pi-75.vercel.app/)**
 
 ## Stack tecnológico
 
