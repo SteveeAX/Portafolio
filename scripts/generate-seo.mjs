@@ -36,6 +36,7 @@ function cdata(value = '') {
 }
 
 function readPosts() {
+  if (!fs.existsSync(contentDir)) return [];
   const files = fs.readdirSync(contentDir).filter((file) => file.endsWith('.md'));
 
   const variants = files

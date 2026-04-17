@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, Database, Code2, Brain, Cpu, Layout, Server } from 'lucide-react';
+import { Terminal, Database, Code2, Brain, Cpu, Server } from 'lucide-react';
 
 const TechIcon: React.FC<{ icon: React.ReactNode; label: string; hoverColor: string }> = ({ icon, label, hoverColor }) => (
   <div 
