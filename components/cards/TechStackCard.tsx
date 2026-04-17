@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, Database, Code2, Brain, Cpu, Server } from 'lucide-react';
+import { Terminal, Database, Code2, Brain, Cpu, Server, Cpu as Chip } from 'lucide-react';
 
 const TechIcon: React.FC<{ icon: React.ReactNode; label: string; hoverColor: string }> = ({ icon, label, hoverColor }) => (
   <div 
@@ -47,6 +47,14 @@ export const TechStackContent: React.FC = () => {
     { icon: <Cpu size={18} />, label: "Microcontroladores", hoverColor: "#00979D" },
   ];
 
+  // Fila 5 — Hardware & Diseño
+  const row5 = [
+    { icon: <Chip size={18} />, label: "Altium", hoverColor: "#A5915F" },
+    { icon: <Chip size={18} />, label: "KiCad", hoverColor: "#314CB0" },
+    { icon: <Chip size={18} />, label: "Inventor", hoverColor: "#FF6D00" },
+    { icon: <Chip size={18} />, label: "Proteus", hoverColor: "#1A8FC1" },
+  ];
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center w-full h-full relative overflow-hidden mask-linear-fade py-2 sm:py-0">
       <div className="flex flex-col gap-4 sm:gap-5 3xl:gap-8 w-[110%] -rotate-[4deg] scale-[1.05] 3xl:scale-[1.15]">
@@ -87,6 +95,16 @@ export const TechStackContent: React.FC = () => {
           </div>
           <div className="flex shrink-0 animate-marquee-reverse items-center gap-4 sm:gap-5" style={{ animationDuration: '28s' }}>
             {row4.map((item, i) => <TechIcon key={`r4-d-${i}`} {...item} />)}
+          </div>
+        </div>
+
+        {/* Row 5 */}
+        <div className="flex gap-4 sm:gap-5 overflow-x-hidden overflow-y-visible w-full py-1">
+          <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '32s' }}>
+            {row5.map((item, i) => <TechIcon key={`r5-${i}`} {...item} />)}
+          </div>
+          <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '32s' }}>
+            {row5.map((item, i) => <TechIcon key={`r5-d-${i}`} {...item} />)}
           </div>
         </div>
       </div>

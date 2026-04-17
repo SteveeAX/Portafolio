@@ -1,5 +1,5 @@
 import React from 'react';
-import { GraduationCap, Award } from 'lucide-react';
+import { GraduationCap, Award, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { degree, certifications } from '../../config/education';
 
@@ -11,6 +11,14 @@ const certColor: Record<string, { icon: string; badge: string }> = {
   emerald: {
     icon: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
     badge: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+  },
+  orange: {
+    icon: 'bg-orange-500/10 border-orange-500/20 text-orange-400',
+    badge: 'text-orange-400 bg-orange-500/10 border-orange-500/20',
+  },
+  purple: {
+    icon: 'bg-purple-500/10 border-purple-500/20 text-purple-400',
+    badge: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
   },
 };
 
@@ -78,6 +86,17 @@ export const EducationSection: React.FC = () => {
                         ID: {cert.credentialId}
                       </span>
                     </div>
+                    {cert.pdfUrl && (
+                      <a
+                        href={cert.pdfUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`mt-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full border transition-all w-fit ${colors.badge} hover:opacity-80`}
+                      >
+                        <ExternalLink size={12} strokeWidth={2.5} />
+                        {t('openCertificate')}
+                      </a>
+                    )}
                   </article>
                 );
               })}

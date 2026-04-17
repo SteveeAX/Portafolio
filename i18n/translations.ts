@@ -11,6 +11,7 @@ export const translations = {
     // Socials
     letsConnect: "Let's connect",
     letsTalk: "Let's Talk",
+    viewCV: 'View CV',
     letsTalkDesc: 'Available for freelance and full-time opportunities.',
     currentlyAvailable: 'Currently Available',
     contactMsg: 'Interested in working together or just want to say hi? Feel free to reach out.',
@@ -49,6 +50,8 @@ export const translations = {
     projectsHeading: 'Featured Projects',
     projectsDesc: 'A selection of my most impactful technological solutions.',
     projectsComingSoon: 'Projects coming soon.',
+    publicationsTitle: 'Publications',
+    publicationsHeading: 'Research & Papers',
     
     // Contact
     contactTitle: "Let's connect.",
@@ -92,6 +95,7 @@ export const translations = {
     educationDesc: 'Academic background and certifications.',
     professionalDegree: 'Professional Degree',
     certificationsTitle: 'Certifications',
+    openCertificate: 'Open Certificate',
     universityDiploma: 'University Diploma',
     technologistDegree: 'Technologist Degree',
     webAppDevelopment: 'Web App Development',
@@ -111,6 +115,7 @@ export const translations = {
     stackCloud: 'Cloud & IoT',
     stackAi: 'Machine Learning & AI',
     stackTools: 'Tools & Embedded',
+    stackHardware: 'Hardware & Design',
     backButton: 'Back',
   },
   es: {
@@ -121,6 +126,7 @@ export const translations = {
     // Socials
     letsConnect: 'Conectemos',
     letsTalk: 'Hablemos',
+    viewCV: 'Ver CV',
     letsTalkDesc: 'Disponible para proyectos freelance y oportunidades de tiempo completo.',
     currentlyAvailable: 'Disponible Actualmente',
     contactMsg: '¿Interesado en trabajar juntos o simplemente quieres saludar? No dudes en contactarme.',
@@ -159,6 +165,8 @@ export const translations = {
     projectsHeading: 'Proyectos Destacados',
     projectsDesc: 'Una selección de mis soluciones tecnológicas más destacadas.',
     projectsComingSoon: 'Proyectos próximamente.',
+    publicationsTitle: 'Publicaciones',
+    publicationsHeading: 'Investigación & Papers',
     
     // Contact
     contactTitle: 'Conectemos.',
@@ -203,6 +211,7 @@ export const translations = {
     educationDesc: 'Formación académica y certificaciones.',
     professionalDegree: 'Título Profesional',
     certificationsTitle: 'Certificaciones',
+    openCertificate: 'Abrir Certificado',
     universityDiploma: 'Diplomado Universitario',
     technologistDegree: 'Título de Tecnólogo',
     webAppDevelopment: 'Desarrollo de Apps Web',
@@ -222,6 +231,7 @@ export const translations = {
     stackCloud: 'Cloud & IoT',
     stackAi: 'Machine Learning & IA',
     stackTools: 'Herramientas & Embedded',
+    stackHardware: 'Hardware & Diseño',
     backButton: 'Atrás',
   }
 } as const;

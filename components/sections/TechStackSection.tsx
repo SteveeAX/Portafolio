@@ -136,6 +136,29 @@ export const TechStackSection: React.FC = () => {
               ))}
             </div>
           </m.div>
+          {/* Hardware & Diseño */}
+          <m.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.7 }}
+            className="space-y-6"
+          >
+            <h3 className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-primary mb-4 flex items-center gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary-rgb),0.6)]"></div>
+              {t('stackHardware')}
+            </h3>
+            <div className="flex flex-wrap gap-2.5">
+              {[
+                { name: 'Altium', color: '#A5915F' },
+                { name: 'KiCad', color: '#314CB0' },
+                { name: 'Inventor', color: '#FF6D00' },
+                { name: 'Proteus', color: '#1A8FC1' },
+              ].map(tech => (
+                <TechTag key={tech.name} name={tech.name} color={tech.color} />
+              ))}
+            </div>
+          </m.div>
         </div>
       </div>
     </section>
