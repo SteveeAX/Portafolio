@@ -57,7 +57,7 @@ export const TechStackSection: React.FC = () => {
             <div className="flex flex-wrap gap-2.5">
               {[
                 { name: 'Python', color: '#3776AB' },
-                { name: 'C/C++', color: '#00599C' },
+                { name: 'C/C++ (Arduino)', color: '#00599C' },
                 { name: 'JavaScript', color: '#F7DF1E' },
                 { name: 'TypeScript', color: '#3178C6' },
                 { name: 'SQL', color: '#4169E1' },

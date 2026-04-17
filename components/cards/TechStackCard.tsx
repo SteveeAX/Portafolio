@@ -19,7 +19,7 @@ export const TechStackContent: React.FC = () => {
   // Fila 1 — Lenguajes de Programación
   const row1 = [
     { icon: <Code2 size={18} />, label: "Python", hoverColor: "#3776AB" },
-    { icon: <Cpu size={18} />, label: "C/C++", hoverColor: "#00599C" },
+    { icon: <Cpu size={18} />, label: "C/C++ (Arduino)", hoverColor: "#00599C" },
     { icon: <Code2 size={18} />, label: "JavaScript", hoverColor: "#F7DF1E" },
     { icon: <Terminal size={18} />, label: "TypeScript", hoverColor: "#3178C6" },
     { icon: <Database size={18} />, label: "SQL", hoverColor: "#4169E1" },
