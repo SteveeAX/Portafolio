@@ -1,7 +1,14 @@
-import React, { useEffect, useRef, Suspense, lazy, useState } from 'react';
+import React, { useEffect, useRef, Suspense, lazy, useState, createContext, useContext, useCallback } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../i18n/LanguageContext';
+
+interface DetailViewContextType {
+  setBackOverride: (fn: (() => void) | null) => void;
+  setBackLabel: (label: string | null) => void;
+}
+export const DetailViewContext = createContext<DetailViewContextType | null>(null);
+export const useDetailViewBack = () => useContext(DetailViewContext);
 
 // Lazy load section components
 const AboutSection = lazy(() => import('./sections/AboutSection').then(m => ({ default: m.AboutSection })));
@@ -30,7 +37,18 @@ const MountNotifier: React.FC<{ onMount: () => void; children: React.ReactNode }
 export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [isReady, setIsReady] = useState(false);
+  const [backOverride, setBackOverrideFn] = useState<(() => void) | null>(null);
+  const [backLabelOverride, setBackLabelOverride] = useState<string | null>(null);
   const { t } = useLanguage();
+
+  const setBackOverride = useCallback((fn: (() => void) | null) => {
+    setBackOverrideFn(() => fn);
+  }, []);
+  const setBackLabel = useCallback((label: string | null) => {
+    setBackLabelOverride(label);
+  }, []);
+
+  const handleBack = backOverride ?? onClose;
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -76,6 +94,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
   };
 
   return (
+    <DetailViewContext.Provider value={{ setBackOverride, setBackLabel }}>
     <m.div
       ref={modalRef}
       layout
@@ -110,12 +129,14 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
             className="absolute top-0 left-0 right-0 z-40 px-4 py-4 sm:px-8 sm:py-6 flex items-center justify-between pointer-events-none"
           >
             <button
-              onClick={onClose}
+              onClick={handleBack}
               aria-label="Go back"
               className="group h-10 px-4 rounded-full bg-card/60 hover:bg-text-main hover:text-page flex items-center gap-2 text-text-main transition-all active:scale-95 border border-border shadow-lg backdrop-blur-xl pointer-events-auto"
             >
               <ArrowLeft size={18} className="group-hover:-translate-x-0.5 transition-transform" />
-              <span className="text-xs sm:text-sm font-bold tracking-tight uppercase tracking-[0.1em]">{t('backButton')}</span>
+              <span className="text-xs sm:text-sm font-bold tracking-tight uppercase tracking-[0.1em]">
+                {backLabelOverride ?? t('backButton')}
+              </span>
             </button>
           </m.div>
         )}
@@ -139,5 +160,6 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
         </Suspense>
       </div>
     </m.div>
+    </DetailViewContext.Provider>
   );
 };

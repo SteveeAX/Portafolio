@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { projects } from '../../config/projects';
 import { publications } from '../../config/publications';
 import { ExternalLink, BookOpen } from 'lucide-react';
+import { ProjectDetail } from './ProjectDetail';
+import { useDetailViewBack } from '../DetailView';
 
 const tagColors: Record<string, string> = {
   Python: 'bg-blue-500/10 border-blue-500/20 text-blue-400',
@@ -23,6 +25,27 @@ const defaultTag = 'bg-card border-border text-text-muted';
 export const ProjectsSection: React.FC = () => {
   const { t, language } = useLanguage();
   const isEs = language === 'es';
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const detailViewBack = useDetailViewBack();
+
+  useEffect(() => {
+    if (selectedProject?.detail) {
+      detailViewBack?.setBackOverride(() => setSelectedProject(null));
+      detailViewBack?.setBackLabel(isEs ? 'Volver a proyectos' : 'Back to projects');
+    } else {
+      detailViewBack?.setBackOverride(null);
+      detailViewBack?.setBackLabel(null);
+    }
+  }, [selectedProject, isEs]);
+
+  if (selectedProject?.detail) {
+    return (
+      <ProjectDetail
+        project={{ ...selectedProject, ...selectedProject.detail }}
+        onBack={() => setSelectedProject(null)}
+      />
+    );
+  }
 
   return (
     <section className="px-5 sm:px-10 lg:px-16 3xl:px-24">
@@ -50,7 +73,10 @@ export const ProjectsSection: React.FC = () => {
                     <span className="text-[10px] font-black uppercase tracking-widest text-text-muted opacity-50">
                       0{index + 1}
                     </span>
-                    <h3 className="text-lg sm:text-xl font-black text-text-main tracking-tight group-hover:text-primary transition-colors">
+                    <h3
+                      onClick={() => project.detail && setSelectedProject(project)}
+                      className={`text-lg sm:text-xl font-black text-text-main tracking-tight transition-colors ${project.detail ? 'cursor-pointer hover:text-primary' : ''}`}
+                    >
                       {isEs ? project.title : project.titleEn}
                     </h3>
                   </div>
