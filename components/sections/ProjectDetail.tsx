@@ -11,19 +11,35 @@ export interface ProjectDetailData {
   introduction: string;
   introductionEn: string;
   arch?: {
+    title?: string;
+    titleEn?: string;
+    image?: string;
+    caption: string;
+    captionEn: string;
+  };
+  diagram1?: {
+    title?: string;
+    titleEn?: string;
     image: string;
     caption: string;
     captionEn: string;
   };
-  diagram1: {
+  diagram2?: {
+    title?: string;
+    titleEn?: string;
     image: string;
     caption: string;
     captionEn: string;
   };
-  diagram2: {
-    image: string;
-    caption: string;
-    captionEn: string;
+  results?: {
+    title?: string;
+    titleEn?: string;
+    table: {
+      headers: string[];
+      rows: string[][];
+    };
+    conclusion: string;
+    conclusionEn: string;
   };
   tags: string[];
   github?: string;
@@ -79,56 +95,105 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
 
         <div className="h-px w-full bg-gradient-to-r from-border via-border to-transparent mb-14" />
 
-        {/* Architecture section */}
+        {/* Architecture / system description */}
         {project.arch && (
+          <>
+            <div className="mb-14">
+              <h2 className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-[0.3em] mb-5">
+                {isEs ? (project.arch.title ?? 'Arquitectura del sistema') : (project.arch.titleEn ?? 'System Architecture')}
+              </h2>
+              {project.arch.image && (
+                <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 aspect-video flex items-center justify-center">
+                  <img src={project.arch.image} alt={isEs ? project.arch.caption : project.arch.captionEn} className="w-full h-full object-contain p-4" />
+                </div>
+              )}
+              <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
+                {isEs ? project.arch.caption : project.arch.captionEn}
+              </p>
+            </div>
+            <div className="h-px w-full bg-gradient-to-r from-border via-border to-transparent mb-14" />
+          </>
+        )}
+
+        {/* Diagram 1 */}
+        {project.diagram1 && (
+          <>
+            <div className="mb-14">
+              <h2 className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-[0.3em] mb-5">
+                {isEs ? (project.diagram1.title ?? 'Diagrama del flujo de interacción de IA') : (project.diagram1.titleEn ?? 'AI Interaction Flow Diagram')}
+              </h2>
+              <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 aspect-video flex items-center justify-center">
+                {project.diagram1.image ? (
+                  <img src={project.diagram1.image} alt={isEs ? project.diagram1.caption : project.diagram1.captionEn} className="w-full h-full object-contain p-4" />
+                ) : (
+                  <span className="text-text-muted text-sm">[ diagrama 1 ]</span>
+                )}
+              </div>
+              <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
+                {isEs ? project.diagram1.caption : project.diagram1.captionEn}
+              </p>
+            </div>
+            <div className="h-px w-full bg-gradient-to-r from-border via-border to-transparent mb-14" />
+          </>
+        )}
+
+        {/* Diagram 2 */}
+        {project.diagram2 && (
+          <>
+            <div className="mb-14">
+              <h2 className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-[0.3em] mb-5">
+                {isEs ? (project.diagram2.title ?? 'Diagrama del flujo de interacción del subsistema IoT') : (project.diagram2.titleEn ?? 'IoT Subsystem Interaction Flow Diagram')}
+              </h2>
+              <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 aspect-video flex items-center justify-center">
+                {project.diagram2.image ? (
+                  <img src={project.diagram2.image} alt={isEs ? project.diagram2.caption : project.diagram2.captionEn} className="w-full h-full object-contain p-4" />
+                ) : (
+                  <span className="text-text-muted text-sm">[ diagrama 2 ]</span>
+                )}
+              </div>
+              <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
+                {isEs ? project.diagram2.caption : project.diagram2.captionEn}
+              </p>
+            </div>
+            <div className="h-px w-full bg-gradient-to-r from-border via-border to-transparent mb-14" />
+          </>
+        )}
+
+        {/* Results table */}
+        {project.results && (
           <div className="mb-14">
             <h2 className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-[0.3em] mb-5">
-              {isEs ? 'Arquitectura del sistema' : 'System Architecture'}
+              {isEs ? (project.results.title ?? 'Resultados') : (project.results.titleEn ?? 'Results')}
             </h2>
-            <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 aspect-video flex items-center justify-center">
-              <img src={project.arch.image} alt={isEs ? project.arch.caption : project.arch.captionEn} className="w-full h-full object-contain p-4" />
+            <div className="w-full overflow-x-auto rounded-[20px] border border-border mb-6">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-card">
+                    {project.results.table.headers.map(h => (
+                      <th key={h} className="px-4 py-3 text-left text-[10px] font-black uppercase tracking-widest text-text-muted">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {project.results.table.rows.map((row, i) => (
+                    <tr key={i} className={`border-b border-border last:border-0 ${i === 0 ? 'bg-primary/5' : 'bg-card/40'} hover:bg-card transition-colors`}>
+                      {row.map((cell, j) => (
+                        <td key={j} className={`px-4 py-3 ${j === 0 ? 'font-bold text-text-main' : 'text-text-muted'} ${i === 0 && j === 0 ? 'text-primary' : ''}`}>
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
             <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
-              {isEs ? project.arch.caption : project.arch.captionEn}
+              {isEs ? project.results.conclusion : project.results.conclusionEn}
             </p>
           </div>
         )}
-
-        <div className="h-px w-full bg-gradient-to-r from-border via-border to-transparent mb-14" />
-
-        {/* Diagram 1 */}
-        <div className="mb-14">
-          <h2 className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-[0.3em] mb-5">
-            {isEs ? 'Diagrama del flujo de interacción de IA' : 'AI Interaction Flow Diagram'}
-          </h2>
-          <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 aspect-video flex items-center justify-center">
-            {project.diagram1.image ? (
-              <img src={project.diagram1.image} alt={isEs ? project.diagram1.caption : project.diagram1.captionEn} className="w-full h-full object-contain p-4" />
-            ) : (
-              <span className="text-text-muted text-sm">[ diagrama 1 ]</span>
-            )}
-          </div>
-          <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
-            {isEs ? project.diagram1.caption : project.diagram1.captionEn}
-          </p>
-        </div>
-
-        {/* Diagram 2 */}
-        <div className="mb-14">
-          <h2 className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-[0.3em] mb-5">
-            {isEs ? 'Diagrama del flujo de interacción del subsistema IoT' : 'IoT Subsystem Interaction Flow Diagram'}
-          </h2>
-          <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 aspect-video flex items-center justify-center">
-            {project.diagram2.image ? (
-              <img src={project.diagram2.image} alt={isEs ? project.diagram2.caption : project.diagram2.captionEn} className="w-full h-full object-contain p-4" />
-            ) : (
-              <span className="text-text-muted text-sm">[ diagrama 2 ]</span>
-            )}
-          </div>
-          <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
-            {isEs ? project.diagram2.caption : project.diagram2.captionEn}
-          </p>
-        </div>
 
         {/* GitHub link */}
         {project.github && (
