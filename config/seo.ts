@@ -1,11 +1,12 @@
+import { imageAssets } from './assets';
+
 export const SITE_URL = 'https://steveenquiroz.vercel.app';
-export const BLOG_URL = 'https://steveenquiroz.vercel.app';
 export const SITE_NAME = 'Steveen Quiroz';
 export const SITE_TITLE = 'Steveen Quiroz | Ingeniero en Telemática';
 export const SITE_DESCRIPTION = 'Portfolio de Steveen Quiroz, Ingeniero en Telemática de Cuenca, Ecuador, especializado en IoT, análisis de datos, Machine Learning e IA.';
 export const SITE_TWITTER = '';
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/Profile.png`;
-export const DEFAULT_OG_IMAGE_ALT = 'Foto de perfil de Steveen Quiroz, Ingeniero en Telemática';
+export const DEFAULT_OG_IMAGE = `${SITE_URL}${imageAssets.profile.openGraph.src}`;
+export const DEFAULT_OG_IMAGE_ALT = imageAssets.profile.openGraph.alt;
 
 export const DEFAULT_KEYWORDS = [
   'Steveen Quiroz',
@@ -20,13 +21,6 @@ export const DEFAULT_KEYWORDS = [
   'Cuenca Ecuador engineer',
 ];
 
-export const BLOG_KEYWORDS = [
-  'IoT blog',
-  'Machine Learning blog',
-  'data analysis',
-  'AI engineering',
-];
-
 export function absoluteUrl(path = '/') {
   if (path.startsWith('http://') || path.startsWith('https://')) {
     return path;
@@ -34,15 +28,6 @@ export function absoluteUrl(path = '/') {
 
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   return `${SITE_URL}${normalizedPath}`;
-}
-
-export function blogAbsoluteUrl(path = '/') {
-  if (path.startsWith('http://') || path.startsWith('https://')) {
-    return path;
-  }
-
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  return `${BLOG_URL}${normalizedPath}`;
 }
 
 export function getLocale(language: 'en' | 'es' = 'en') {

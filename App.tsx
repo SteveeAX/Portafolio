@@ -58,28 +58,6 @@ function AppContent() {
   const { t, language } = useLanguage();
   const isSpanish = language === 'es';
 
-  const getBlogHref = () => {
-    if (typeof window === 'undefined') return '/blog';
-    
-    const host = window.location.host; // e.g. "localhost:3000", "andermendz.dev"
-    const hostname = window.location.hostname;
-    const protocol = window.location.protocol;
-    const langQuery = language === 'es' ? '?lang=es' : '';
-
-    if (hostname === 'steveenquiroz.vercel.app') {
-      return `https://steveenquiroz.vercel.app/blog${langQuery}`;
-    }
-    
-    // For localhost development, try to use blog.localhost subdomain
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
-      return `${protocol}//blog.${host}/${langQuery}`;
-    }
-
-    return `/blog${langQuery}`;
-  };
-
-  const blogHref = getBlogHref();
-
   const homepageTitle = 'Portafolio | Steveen Quiroz';
   const homepageSeoTitle = isSpanish
     ? 'Ingeniero en Telemática'
@@ -337,12 +315,6 @@ function AppContent() {
             >
               <div className="flex items-center gap-3">
                 <p>{t('copyright').replace('{year}', String(new Date().getFullYear()))}</p>
-                <a
-                  href={blogHref}
-                  className="transition-colors hover:text-text-main"
-                >
-                  Blog
-                </a>
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></div>

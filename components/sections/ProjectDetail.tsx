@@ -2,32 +2,38 @@ import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { m } from 'framer-motion';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { OptimizedImage } from '../OptimizedImage';
+import type { ImageAsset } from '../../config/assets';
 
 export interface ProjectDetailData {
   title: string;
   titleEn: string;
-  photo: string;
-  photoAlt: string;
+  photo: ImageAsset;
   introduction: string;
   introductionEn: string;
   arch?: {
     title?: string;
     titleEn?: string;
-    image?: string;
+    image?: ImageAsset;
+    images?: ImageAsset[];
     caption: string;
     captionEn: string;
   };
   diagram1?: {
     title?: string;
     titleEn?: string;
-    image: string;
+    image: ImageAsset;
+    images?: ImageAsset[];
+    imagesLayout?: 'grid' | 'stack';
     caption: string;
     captionEn: string;
   };
   diagram2?: {
     title?: string;
     titleEn?: string;
-    image: string;
+    image?: ImageAsset;
+    images?: ImageAsset[];
+    imagesLayout?: 'grid' | 'stack';
     caption: string;
     captionEn: string;
   };
@@ -38,8 +44,8 @@ export interface ProjectDetailData {
       headers: string[];
       rows: string[][];
     };
-    conclusion: string;
-    conclusionEn: string;
+    conclusion?: string;
+    conclusionEn?: string;
   };
   tags: string[];
   github?: string;
@@ -53,6 +59,23 @@ interface ProjectDetailProps {
 export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
   const { language } = useLanguage();
   const isEs = language === 'es';
+
+  const renderImages = (images?: ImageAsset[], layout: 'grid' | 'stack' = 'grid') => {
+    if (!images?.length) return null;
+
+    return (
+      <div className={`mb-5 grid gap-4 ${layout === 'grid' && images.length > 1 ? 'sm:grid-cols-2' : ''}`}>
+        {images.map((image) => (
+          <div
+            key={image.src}
+            className={`w-full rounded-[20px] overflow-hidden border border-border bg-card-hover flex items-center justify-center ${image.display === 'phone' ? 'max-w-[416px] mx-auto' : ''}`}
+          >
+            <OptimizedImage asset={image} className={`w-full h-auto object-contain ${image.display === 'wide' ? 'p-3 sm:p-4' : 'p-4'}`} />
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <m.div
@@ -82,7 +105,7 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
         {/* Product photo */}
         <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-10 aspect-video flex items-center justify-center">
           {project.photo ? (
-            <img src={project.photo} alt={project.photoAlt} className="w-full h-full object-cover" />
+            <OptimizedImage asset={project.photo} className="w-full h-full object-cover" />
           ) : (
             <span className="text-text-muted text-sm">[ foto del producto ]</span>
           )}
@@ -103,10 +126,11 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
                 {isEs ? (project.arch.title ?? 'Arquitectura del sistema') : (project.arch.titleEn ?? 'System Architecture')}
               </h2>
               {project.arch.image && (
-                <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 aspect-video flex items-center justify-center">
-                  <img src={project.arch.image} alt={isEs ? project.arch.caption : project.arch.captionEn} className="w-full h-full object-contain p-4" />
+                <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 flex items-center justify-center">
+                  <OptimizedImage asset={project.arch.image} className="w-full h-auto object-contain p-4" />
                 </div>
               )}
+              {renderImages(project.arch.images)}
               <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
                 {isEs ? project.arch.caption : project.arch.captionEn}
               </p>
@@ -122,13 +146,14 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
               <h2 className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-[0.3em] mb-5">
                 {isEs ? (project.diagram1.title ?? 'Diagrama del flujo de interacción de IA') : (project.diagram1.titleEn ?? 'AI Interaction Flow Diagram')}
               </h2>
-              <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 aspect-video flex items-center justify-center">
+              <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 flex items-center justify-center">
                 {project.diagram1.image ? (
-                  <img src={project.diagram1.image} alt={isEs ? project.diagram1.caption : project.diagram1.captionEn} className="w-full h-full object-contain p-4" />
+                  <OptimizedImage asset={project.diagram1.image} className="w-full h-auto object-contain p-4" />
                 ) : (
                   <span className="text-text-muted text-sm">[ diagrama 1 ]</span>
                 )}
               </div>
+              {renderImages(project.diagram1.images, project.diagram1.imagesLayout)}
               <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
                 {isEs ? project.diagram1.caption : project.diagram1.captionEn}
               </p>
@@ -144,13 +169,12 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
               <h2 className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-[0.3em] mb-5">
                 {isEs ? (project.diagram2.title ?? 'Diagrama del flujo de interacción del subsistema IoT') : (project.diagram2.titleEn ?? 'IoT Subsystem Interaction Flow Diagram')}
               </h2>
-              <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 aspect-video flex items-center justify-center">
-                {project.diagram2.image ? (
-                  <img src={project.diagram2.image} alt={isEs ? project.diagram2.caption : project.diagram2.captionEn} className="w-full h-full object-contain p-4" />
-                ) : (
-                  <span className="text-text-muted text-sm">[ diagrama 2 ]</span>
-                )}
-              </div>
+              {project.diagram2.image && (
+                <div className="w-full rounded-[20px] overflow-hidden border border-border bg-card-hover mb-5 flex items-center justify-center">
+                  <OptimizedImage asset={project.diagram2.image} className="w-full h-auto object-contain p-4" />
+                </div>
+              )}
+              {renderImages(project.diagram2.images, project.diagram2.imagesLayout)}
               <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
                 {isEs ? project.diagram2.caption : project.diagram2.captionEn}
               </p>
@@ -189,9 +213,11 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
                 </tbody>
               </table>
             </div>
-            <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
-              {isEs ? project.results.conclusion : project.results.conclusionEn}
-            </p>
+            {(project.results.conclusion || project.results.conclusionEn) && (
+              <p className="text-text-muted text-sm sm:text-base leading-relaxed text-justify">
+                {isEs ? project.results.conclusion : project.results.conclusionEn}
+              </p>
+            )}
           </div>
         )}
 

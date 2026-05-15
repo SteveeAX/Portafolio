@@ -1,8 +1,9 @@
 import type { BentoItem } from '../types';
+import { imageAssets } from './assets';
 
 export const bentoItems: BentoItem[] = [
   { id: 'intro', colSpan: 'col-span-2 sm:col-span-2' },
-  { id: 'photo', colSpan: 'col-span-1', bgImage: "/Profile.png" },
+  { id: 'photo', colSpan: 'col-span-1', bgImage: imageAssets.profile.card.src },
   { id: 'socials', colSpan: 'col-span-1' },
   { id: 'stack', colSpan: 'col-span-2 sm:col-span-2', rowSpan: 'row-span-2', hasArrow: true, onClickModal: 'stack' },
   { id: 'about', colSpan: 'col-span-1', hasArrow: true, onClickModal: 'about' },

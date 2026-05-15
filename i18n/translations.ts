@@ -25,11 +25,6 @@ export const translations = {
     // Tech Stack
     techStackTitle: 'Tech Stack',
 
-    // Blog
-    blogTitle: 'Blog',
-    readArticles: 'Read my latest articles.',
-    latestPost: 'Latest Post',
-    
     // About
     aboutTitle: 'About',
     aboutPhrase: 'I like turning ideas into <details>useful</details> <performance>technology</performance>.',
@@ -140,11 +135,6 @@ export const translations = {
     // Tech Stack
     techStackTitle: 'Tecnologías',
 
-    // Blog
-    blogTitle: 'Blog',
-    readArticles: 'Lee mis últimos artículos.',
-    latestPost: 'Último Artículo',
-    
     // About
     aboutTitle: 'Sobre mí',
     aboutPhrase: 'Me gusta convertir ideas en <details>tecnología</details> <performance>útil</performance>.',

@@ -28,7 +28,6 @@ interface SEOProps {
   tags?: string[];
   section?: string;
   schemaData?: object | object[];
-  rssFeed?: string;
   noindex?: boolean;
 }
 
@@ -51,7 +50,6 @@ export function SEO({
   tags,
   section,
   schemaData,
-  rssFeed,
   noindex = false,
 }: SEOProps) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_TITLE;
@@ -84,8 +82,6 @@ export function SEO({
       {alternates?.map((alternate) => (
         <link key={`${alternate.hrefLang}-${alternate.href}`} rel="alternate" hrefLang={alternate.hrefLang} href={alternate.href} />
       ))}
-      {rssFeed && <link rel="alternate" type="application/rss+xml" title={`${SITE_NAME} Blog RSS Feed`} href={rssFeed} />}
-
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={url} />
       <meta property="og:title" content={fullTitle} />

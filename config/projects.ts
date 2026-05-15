@@ -1,3 +1,5 @@
+import { imageAssets } from './assets';
+
 export const projects = [
   {
     title: 'Asistente Virtual para Adultos Mayores',
@@ -7,22 +9,21 @@ export const projects = [
     tags: ['Python', 'Raspberry Pi', 'Google Cloud'],
     link: null,
     detail: {
-      photo: '/Disposiitvo.png',
-      photoAlt: 'Dispositivo Asistente Virtual para Adultos Mayores',
+      photo: imageAssets.projects.virtualAssistant.device,
       introduction: 'Asistente virtual basado en inteligencia artificial generativa e internet de las cosas, diseñado para proporcionar apoyo en el hogar. El sistema integra captura de voz, procesamiento de lenguaje natural en la nube, generación de respuestas mediante modelos de lenguaje y control de dispositivos domésticos inteligentes mediante una arquitectura por capas.',
       introductionEn: 'Virtual assistant based on generative artificial intelligence and the Internet of Things, designed to provide home support. The system integrates voice capture, cloud-based natural language processing, response generation through language models, and control of smart home devices through a layered architecture.',
       arch: {
-        image: '/General_arch.png',
+        image: imageAssets.projects.virtualAssistant.architecture,
         caption: 'El sistema está organizado en cuatro capas principales: la capa de usuario contiene las interfaces (asistente de voz e interfaz web), la capa de servicio incluye el orquestador central y servicios modulares, la capa de servicios externos integra síntesis y transformación de texto a voz, base de datos en la nube, inteligencia artificial generativa y servicios IoT, y la capa de hardware agrupa los componentes físicos como pulsador, micrófono, dongle IoT, pantalla y parlante.',
         captionEn: 'The system is organized into four main layers: the user layer contains the interfaces (voice assistant and web interface), the service layer includes the central orchestrator and modular services, the external services layer integrates text-to-speech synthesis, cloud database, generative artificial intelligence, and IoT services, and the hardware layer groups physical components such as the button, microphone, IoT dongle, screen, and speaker.',
       },
       diagram1: {
-        image: '/IA_Arq.png',
+        image: imageAssets.projects.virtualAssistant.aiFlow,
         caption: 'El flujo comienza con la captura de audio mediante el micrófono conectado a la Raspberry Pi. El audio se envía a Google Cloud Speech-to-Text para transcripción. El texto se procesa mediante un modelo de lenguaje generativo que genera una respuesta contextualizada. Finalmente, la respuesta se convierte a voz mediante síntesis de texto a voz y se reproduce en el parlante.',
         captionEn: 'The flow begins with audio capture through the microphone connected to the Raspberry Pi. Audio is sent to Google Cloud Speech-to-Text for transcription. The text is processed by a generative language model that generates a contextualized response. Finally, the response is converted to speech via text-to-speech synthesis and played through the speaker.',
       },
       diagram2: {
-        image: '/iot_arq.png',
+        image: imageAssets.projects.virtualAssistant.iotFlow,
         caption: 'La Raspberry Pi actúa como núcleo central conectado al hogar mediante WiFi. Se comunica con Google Cloud Services para obtener datos externos (clima, noticias, información). El sistema también se integra con dispositivos inteligentes del hogar para control remoto mediante comandos de voz, permitiendo automación doméstica desde una interfaz conversacional única.',
         captionEn: 'The Raspberry Pi acts as the central hub connected to the home via WiFi. It communicates with Google Cloud Services to retrieve external data (weather, news, information). The system also integrates with smart home devices for remote control via voice commands, enabling home automation from a single conversational interface.',
       },
@@ -37,8 +38,7 @@ export const projects = [
     tags: ['Python', 'Machine Learning', 'Data Analysis'],
     link: null,
     detail: {
-      photo: '/SistemaFV.png',
-      photoAlt: 'Sistema Fotovoltaico',
+      photo: imageAssets.projects.photovoltaicSystem.system,
       introduction: 'Modelo de machine learning para predicción de potencia de salida en sistemas fotovoltaicos. El proyecto compara cinco arquitecturas: GRU, LSTM, Random Forest, CNN y XGBoost. Utiliza features meteorológicas y temporales como entrada, entrenado en Google Colab con TensorFlow.',
       introductionEn: 'Machine learning model for predicting output power in photovoltaic systems. The project compares five architectures: GRU, LSTM, Random Forest, CNN, and XGBoost. It uses meteorological and temporal features as input, trained on Google Colab with TensorFlow.',
       arch: {
@@ -51,17 +51,17 @@ export const projects = [
         title: 'Resultados comparativos',
         titleEn: 'Comparative Results',
         table: {
-          headers: ['Modelo', 'MAE', 'RMSE', 'R²', 'MAPE'],
+          headers: ['Modelo', 'MAE', 'RMSE', 'MAPE'],
           rows: [
-            ['GRU', '0.047', '0.066', '0.321', '3.01%'],
-            ['LSTM', '0.047', '0.066', '0.318', '3.03%'],
-            ['Random Forest', '0.048', '0.066', '0.312', '3.06%'],
-            ['CNN', '0.048', '0.067', '0.304', '3.10%'],
-            ['XGBoost', '0.048', '0.067', '0.291', '3.09%'],
+            ['GRU', '0.047', '0.066', '3.01%'],
+            ['LSTM', '0.047', '0.066', '3.03%'],
+            ['Random Forest', '0.048', '0.066', '3.06%'],
+            ['CNN', '0.048', '0.067', '3.10%'],
+            ['XGBoost', '0.048', '0.067', '3.09%'],
           ],
         },
-        conclusion: 'GRU presenta el mejor desempeño con el MAE más bajo (0.047) y el R² más alto (0.321), demostrando que las arquitecturas recurrentes son más efectivas para capturar patrones temporales en datos meteorológicos.',
-        conclusionEn: 'GRU achieves the best performance with the lowest MAE (0.047) and highest R² (0.321), demonstrating that recurrent architectures are more effective at capturing temporal patterns in meteorological data.',
+        conclusion: 'GRU presenta el mejor desempeño con el MAE más bajo (0.047), demostrando que las arquitecturas recurrentes son más efectivas para capturar patrones temporales en datos meteorológicos.',
+        conclusionEn: 'GRU achieves the best performance with the lowest MAE (0.047), demonstrating that recurrent architectures are more effective at capturing temporal patterns in meteorological data.',
       },
       github: 'https://github.com/SteveeAX/Modelo-Predictivo-Fotovoltaico',
     },
@@ -73,5 +73,78 @@ export const projects = [
     descriptionEn: 'IoT system with ESP32, AWS IoT Core (MQTT) and Flutter frontend.',
     tags: ['ESP32', 'AWS IoT Core', 'Flutter', 'MQTT'],
     link: null,
+    detail: {
+      photo: imageAssets.projects.residentialElectricalMonitoring.electricalDiagram,
+      introduction: 'El sistema funciona como una red IoT orientada a la gestión energética doméstica. Para ello, integra medición eléctrica, comunicación inalámbrica y procesamiento en la nube mediante AWS. Los datos capturados se envían desde el prototipo hacia la plataforma, donde se almacenan y procesan para facilitar el seguimiento del consumo y activar respuestas automáticas según las condiciones detectadas.',
+      introductionEn: 'The system works as an IoT network focused on household energy management. It integrates electrical measurement, wireless communication, and cloud processing through AWS. Captured data is sent from the prototype to the platform, where it is stored and processed to support consumption tracking and trigger automatic responses based on detected conditions.',
+      diagram1: {
+        title: 'Despliegue físico',
+        titleEn: 'Physical Deployment',
+        image: imageAssets.projects.residentialElectricalMonitoring.deployment,
+        caption: 'La implementación física se organizó en tres puntos estratégicos del hogar. Cada nodo cumple una función específica dentro del sistema: medición en el tablero eléctrico, detección de presencia y actuación sobre cargas domésticas. Esta distribución permitió cubrir distintas zonas de uso sin modificar de forma invasiva la infraestructura eléctrica existente.',
+        captionEn: 'The physical implementation was organized into three strategic points in the home. Each node has a specific role within the system: measurement at the electrical panel, presence detection, and actuation over household loads. This distribution made it possible to cover different usage zones without invasively modifying the existing electrical infrastructure.',
+      },
+      diagram2: {
+        title: 'Aplicación móvil y automatización',
+        titleEn: 'Mobile App and Automation',
+        images: [
+          imageAssets.projects.residentialElectricalMonitoring.appDashboard,
+          imageAssets.projects.residentialElectricalMonitoring.appControl,
+        ],
+        imagesLayout: 'stack' as const,
+        caption: 'La aplicación móvil centraliza la interacción del usuario con el sistema. Desde su interfaz se pueden visualizar variables como voltaje, corriente, potencia, energía consumida y estado de los dispositivos conectados. Además, permite accionar manualmente enchufes, iluminación y aire acondicionado, mientras AWS gestiona acciones automáticas para optimizar el consumo energético del entorno doméstico.',
+        captionEn: 'The mobile application centralizes the user interaction with the system. From its interface, users can view variables such as voltage, current, power, consumed energy, and connected device status. It also allows manual control of plugs, lighting, and air conditioning, while AWS manages automatic actions to optimize energy consumption in the household environment.',
+      },
+      results: {
+        title: 'Componentes del sistema',
+        titleEn: 'System Components',
+        table: {
+          headers: ['Capa', 'Función', 'Tecnologías'],
+          rows: [
+            ['Dispositivo', 'Captura de señales eléctricas y publicación de telemetría', 'ESP32, sensores, MQTT'],
+            ['Nube', 'Recepción segura de mensajes y gestión de tópicos IoT', 'AWS IoT Core'],
+            ['Aplicación', 'Visualización móvil de consumo y estados del sistema', 'Flutter'],
+          ],
+        },
+      },
+      github: 'https://github.com/SteveeAX/Monitoreo_electrico',
+    },
+  },
+  {
+    title: 'Modelo clasificatorio del estado preictal para ataques epilépticos',
+    titleEn: 'Preictal State Classification Model for Epileptic Seizures',
+    description: 'Clasificación de ventanas EEG preictales mediante filtrado digital, extracción de características y modelos de Machine Learning.',
+    descriptionEn: 'Classification of preictal EEG windows using digital filtering, feature extraction, and Machine Learning models.',
+    tags: ['Python', 'Machine Learning', 'EEG', 'Signal Processing'],
+    link: null,
+    detail: {
+      photo: imageAssets.projects.eegPreictalClassifier.originalSignal,
+      introduction: 'La señal original evidencia la actividad EEG sin procesamiento previo, con variaciones de amplitud asociadas a los estados interictal, preictal e ictal. En el segmento interictal se observa una dinámica de base más estable, mientras que el estado ictal presenta mayor variabilidad y picos de amplitud más pronunciados. Esta revisión inicial permite reconocer diferencias relevantes antes de aplicar el filtrado digital y la extracción de características espectrales.',
+      introductionEn: 'The original signal shows raw EEG activity without prior processing, with amplitude variations associated with interictal, preictal, and ictal states. The interictal segment shows a more stable baseline dynamic, while the ictal state presents higher variability and more pronounced amplitude peaks. This initial inspection helps identify relevant temporal differences before applying digital filtering and spectral feature extraction.',
+      diagram1: {
+        title: 'Selección del filtro digital',
+        titleEn: 'Digital Filter Selection',
+        image: imageAssets.projects.eegPreictalClassifier.filterComparison,
+        caption: 'A partir de la comparación entre filtros, se seleccionó el filtro FIR pasabanda con ventana Hamming, debido a su respuesta espectral más controlada dentro del rango de interés de 0.5 a 40 Hz. Aunque presenta mayor costo computacional que los filtros IIR, su aplicación fuera de línea permitió priorizar la preservación de las bandas clínicas y reducir componentes externas sin comprometer la morfología principal de la señal.',
+        captionEn: 'Based on the filter comparison, a Hamming-window FIR bandpass filter was selected due to its more controlled spectral response within the 0.5 to 40 Hz range of interest. Although it has a higher computational cost than IIR filters, its offline application made it possible to prioritize preservation of clinical bands and reduce external components without compromising the main signal morphology.',
+      },
+      results: {
+        title: 'Resultados comparativos',
+        titleEn: 'Comparative Results',
+        table: {
+          headers: ['Modelo', 'Precisión', 'Sensibilidad', 'F1', 'AUC'],
+          rows: [
+            ['Random Forest', '0.889', '0.915', '0.899', '0.951'],
+            ['XGBoost', '0.889', '0.913', '0.900', '0.950'],
+            ['SVM', '0.819', '0.851', '0.829', '0.910'],
+            ['KNN', '0.808', '0.874', '0.838', '0.899'],
+            ['LSTM', '0.586', '0.683', '0.599', '0.570'],
+          ],
+        },
+        conclusion: 'Los resultados generales muestran que Random Forest y XGBoost alcanzaron el mejor desempeño, con AUC de 0.951 y 0.950, respectivamente. Ambos modelos también presentaron sensibilidades superiores a 0.91, lo que indica una alta capacidad para identificar ventanas preictales dentro del esquema de validación aplicado. SVM y KNN obtuvieron rendimientos intermedios, mientras que LSTM mostró menor capacidad discriminativa bajo la configuración experimental utilizada. Los resultados detallados, junto con el desarrollo del código, se encuentran disponibles en GitHub.',
+        conclusionEn: 'The overall results show that Random Forest and XGBoost achieved the best performance, with AUC values of 0.951 and 0.950, respectively. Both models also reached sensitivities above 0.91, indicating a strong ability to identify preictal windows within the applied validation scheme. SVM and KNN achieved intermediate performance, while LSTM showed lower discriminative capacity under the experimental configuration used. Detailed results and code development are available on GitHub.',
+      },
+      github: 'https://github.com/SteveeAX/Modelo_clasificatorio_EEG',
+    },
   },
 ];

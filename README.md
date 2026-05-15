@@ -33,7 +33,8 @@ Los datos personales están centralizados en la carpeta `config/`:
 | `config/education.ts` | Título universitario y certificaciones |
 | `config/projects.ts` | Proyectos (bilingüe) |
 | `config/layout.ts` | Orden y tamaño de las cards en la grilla |
-| `public/Profile.png` | Foto de perfil |
+| `config/assets.ts` | Rutas optimizadas y textos alternativos de imágenes |
+| `public/Profile.png` | Foto de perfil fuente para `npm run images:optimize` |
 
 Para agregar traducciones, editar ambos objetos `en` y `es` en `i18n/translations.ts`.
 

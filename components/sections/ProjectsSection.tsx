@@ -18,6 +18,8 @@ const tagColors: Record<string, string> = {
   IoT: 'bg-teal-500/10 border-teal-500/20 text-teal-400',
   'Embedded Systems': 'bg-orange-500/10 border-orange-500/20 text-orange-400',
   'Data Analysis': 'bg-purple-500/10 border-purple-500/20 text-purple-400',
+  EEG: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400',
+  'Signal Processing': 'bg-lime-500/10 border-lime-500/20 text-lime-400',
 };
 
 const defaultTag = 'bg-card border-border text-text-muted';
