@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { m } from 'framer-motion';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { Language } from '../i18n/translations';
+import { useReducedExperience } from '../hooks/useReducedExperience';
 
 interface LanguageSwitcherProps {
   onLanguageChange?: () => void;
@@ -10,6 +11,7 @@ interface LanguageSwitcherProps {
 export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ onLanguageChange }) => {
   const { language, setLanguage } = useLanguage();
   const [isAnimating, setIsAnimating] = useState(false);
+  const isReducedExperience = useReducedExperience();
 
   const languages: { code: Language; label: string; flag: string }[] = [
     { code: 'en', label: 'EN', flag: '🇺🇸' },
@@ -34,10 +36,10 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ onLanguageCh
 
   return (
     <m.div
-      className="fixed bottom-6 left-6 z-[120] flex items-center gap-1 p-1.5 rounded-full bg-card/80 backdrop-blur-xl border border-border shadow-2xl ring-1 ring-white/10"
-      initial={{ opacity: 0, scale: 0, x: -20 }}
+      className="fixed bottom-6 left-6 z-[120] flex items-center gap-1 p-1.5 rounded-full bg-card/90 md:bg-card/80 md:backdrop-blur-xl border border-border shadow-lg md:shadow-2xl ring-1 ring-white/10"
+      initial={isReducedExperience ? false : { opacity: 0, scale: 0, x: -20 }}
       animate={{ opacity: 1, scale: 1, x: 0 }}
-      transition={{ duration: 0.5, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: isReducedExperience ? 0.12 : 0.5, delay: isReducedExperience ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] }}
     >
       {languages.map((lang) => (
         <m.button
@@ -50,8 +52,8 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ onLanguageCh
               : 'text-text-muted hover:text-text-main hover:bg-card-hover'
             }
           `}
-          whileHover={{ scale: language === lang.code ? 1 : 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={isReducedExperience ? undefined : { scale: language === lang.code ? 1 : 1.05 }}
+          whileTap={isReducedExperience ? undefined : { scale: 0.95 }}
           disabled={isAnimating}
         >
           {/* Active background pill */}

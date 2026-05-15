@@ -8,7 +8,7 @@ export const EducationContent: React.FC = () => {
   return (
     <div className="h-full flex flex-col justify-end relative z-10">
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 p-24 bg-gradient-to-br from-primary/5 to-purple-500/5 blur-[60px] rounded-full pointer-events-none z-0"></div>
+      <div className="absolute top-0 right-0 p-24 bg-gradient-to-br from-primary/5 to-purple-500/5 blur-[60px] rounded-full pointer-events-none z-0 hidden md:block"></div>
       
       <div className="space-y-2 sm:space-y-3">
         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-card flex items-center justify-center text-text-main border border-border shadow-sm">

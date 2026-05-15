@@ -26,8 +26,8 @@ export const IntroContent: React.FC = () => {
   return (
     <div className="relative h-full flex flex-col">
       {/* Decorative Background Blobs */}
-      <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary/5 rounded-full blur-[80px] animate-blob mix-blend-overlay pointer-events-none"></div>
-      <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-blue-500/5 rounded-full blur-[80px] animate-blob mix-blend-overlay pointer-events-none" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary/5 rounded-full blur-[80px] animate-blob mix-blend-overlay pointer-events-none hidden md:block"></div>
+      <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-blue-500/5 rounded-full blur-[80px] animate-blob mix-blend-overlay pointer-events-none hidden md:block" style={{ animationDelay: '2s' }}></div>
       
       {/* Main Content: Name + Bio */}
       <div className="relative z-10 flex flex-col h-full justify-center">

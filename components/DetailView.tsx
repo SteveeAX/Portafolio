@@ -2,6 +2,7 @@ import React, { useEffect, useRef, Suspense, lazy, useState, createContext, useC
 import { ArrowLeft } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useReducedExperience } from '../hooks/useReducedExperience';
 
 interface DetailViewContextType {
   setBackOverride: (fn: (() => void) | null) => void;
@@ -40,6 +41,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
   const [backOverride, setBackOverrideFn] = useState<(() => void) | null>(null);
   const [backLabelOverride, setBackLabelOverride] = useState<string | null>(null);
   const { t } = useLanguage();
+  const isReducedExperience = useReducedExperience();
 
   const setBackOverride = useCallback((fn: (() => void) | null) => {
     setBackOverrideFn(() => fn);
@@ -97,19 +99,19 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
     <DetailViewContext.Provider value={{ setBackOverride, setBackLabel }}>
     <m.div
       ref={modalRef}
-      layout
-      className="relative w-full min-h-[calc(100vh-8rem)] sm:min-h-[70vh] max-h-[calc(100vh-8rem)] sm:max-h-[82vh] 3xl:max-h-[88vh] bg-card rounded-[24px] sm:rounded-[40px] border border-border overflow-hidden flex flex-col shadow-2xl ring-1 ring-white/10 transform-gpu will-change-[transform,height,opacity] flex-1"
+      layout={!isReducedExperience}
+      className="relative w-full min-h-[calc(100vh-8rem)] sm:min-h-[70vh] max-h-[calc(100vh-8rem)] sm:max-h-[82vh] 3xl:max-h-[88vh] bg-card rounded-[24px] sm:rounded-[40px] border border-border overflow-hidden flex flex-col shadow-xl md:shadow-2xl ring-1 ring-white/10 md:transform-gpu md:will-change-[transform,height,opacity] flex-1"
       tabIndex={-1}
       role="region"
       aria-labelledby={`section-title-${type}`}
-      initial={{ y: 12, opacity: 0 }}
+      initial={isReducedExperience ? false : { y: 12, opacity: 0 }}
       animate={{ 
-        y: isReady ? 0 : 8, 
+        y: isReducedExperience ? 0 : (isReady ? 0 : 8), 
         opacity: isReady ? 1 : 0 
       }}
-      exit={{ y: 8, opacity: 0 }}
+      exit={isReducedExperience ? { opacity: 0 } : { y: 8, opacity: 0 }}
       transition={{ 
-        duration: 0.5, 
+        duration: isReducedExperience ? 0.16 : 0.5, 
         ease: [0.16, 1, 0.3, 1], // Apple-style quintic ease-out
         layout: { 
           type: "spring",
@@ -131,7 +133,7 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
             <button
               onClick={handleBack}
               aria-label="Go back"
-              className="group h-10 px-4 rounded-full bg-card/60 hover:bg-text-main hover:text-page flex items-center gap-2 text-text-main transition-all active:scale-95 border border-border shadow-lg backdrop-blur-xl pointer-events-auto"
+              className="group h-10 px-4 rounded-full bg-card/90 md:bg-card/60 hover:bg-text-main hover:text-page flex items-center gap-2 text-text-main transition-all active:scale-95 border border-border shadow-md md:shadow-lg md:backdrop-blur-xl pointer-events-auto"
             >
               <ArrowLeft size={18} className="group-hover:-translate-x-0.5 transition-transform" />
               <span className="text-xs sm:text-sm font-bold tracking-tight uppercase tracking-[0.1em]">
@@ -147,12 +149,12 @@ export const DetailView: React.FC<DetailViewProps> = ({ onClose, type }) => {
         <Suspense fallback={null}>
           <MountNotifier onMount={() => setIsReady(true)}>
             <m.div
-              initial={{ opacity: 0, filter: "blur(4px)" }}
+              initial={isReducedExperience ? false : { opacity: 0, filter: "blur(4px)" }}
               animate={{ 
                 opacity: isReady ? 1 : 0,
-                filter: isReady ? "blur(0px)" : "blur(4px)"
+                filter: isReducedExperience ? "none" : (isReady ? "blur(0px)" : "blur(4px)")
               }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              transition={{ duration: isReducedExperience ? 0.12 : 0.5, ease: "easeOut" }}
             >
               {renderSection()}
             </m.div>

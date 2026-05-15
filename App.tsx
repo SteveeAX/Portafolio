@@ -38,6 +38,7 @@ import { bentoItems } from './config/layout';
 
 // Import i18n
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext';
+import { useReducedExperience } from './hooks/useReducedExperience';
 
 // Import types
 // (No types needed here anymore)
@@ -54,6 +55,7 @@ function AppContent() {
 
   const { theme, toggleTheme } = useTheme();
   const [isLanguageChanging, setIsLanguageChanging] = useState(false);
+  const isReducedExperience = useReducedExperience();
   
   const { t, language } = useLanguage();
   const isSpanish = language === 'es';
@@ -237,14 +239,14 @@ function AppContent() {
       
       {/* Theme Toggle Button */}
       <m.button
-        className="fixed bottom-6 right-6 z-[120] p-4 rounded-full bg-card/80 backdrop-blur-xl border border-border shadow-2xl text-text-main hover:bg-card-hover transition-colors ring-1 ring-white/10"
+        className="fixed bottom-6 right-6 z-[120] p-4 rounded-full bg-card/90 md:bg-card/80 md:backdrop-blur-xl border border-border shadow-lg md:shadow-2xl text-text-main hover:bg-card-hover transition-colors ring-1 ring-white/10"
         onClick={toggleTheme}
         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-        initial={{ opacity: 0, scale: 0, rotate: -180 }}
+        initial={isReducedExperience ? false : { opacity: 0, scale: 0, rotate: -180 }}
         animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ duration: 0.5, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{ scale: 1.1, rotate: 10 }}
-        whileTap={{ scale: 0.9 }}
+        transition={{ duration: isReducedExperience ? 0.12 : 0.5, delay: isReducedExperience ? 0 : 1.0, ease: [0.22, 1, 0.36, 1] }}
+        whileHover={isReducedExperience ? undefined : { scale: 1.1, rotate: 10 }}
+        whileTap={isReducedExperience ? undefined : { scale: 0.9 }}
       >
         <AnimatePresence mode="wait">
           {theme === 'dark' ? (

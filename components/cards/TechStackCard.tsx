@@ -1,5 +1,6 @@
 import React from 'react';
 import { Terminal, Database, Code2, Brain, Cpu, Server, Cpu as Chip } from 'lucide-react';
+import { useReducedExperience } from '../../hooks/useReducedExperience';
 
 const TechIcon: React.FC<{ icon: React.ReactNode; label: string; hoverColor: string }> = ({ icon, label, hoverColor }) => (
   <div 
@@ -16,6 +17,7 @@ const TechIcon: React.FC<{ icon: React.ReactNode; label: string; hoverColor: str
 );
 
 export const TechStackContent: React.FC = () => {
+  const isReducedExperience = useReducedExperience();
   // Fila 1 — Lenguajes de Programación
   const row1 = [
     { icon: <Code2 size={18} />, label: "Python", hoverColor: "#3776AB" },
@@ -55,57 +57,62 @@ export const TechStackContent: React.FC = () => {
     { icon: <Chip size={18} />, label: "Proteus", hoverColor: "#1A8FC1" },
   ];
 
+  const rowAnimationClass = (direction: 'left' | 'right') => {
+    if (isReducedExperience) return '';
+    return direction === 'left' ? 'animate-marquee' : 'animate-marquee-reverse';
+  };
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center w-full h-full relative overflow-hidden mask-linear-fade py-2 sm:py-0">
-      <div className="flex flex-col gap-4 sm:gap-5 3xl:gap-8 w-[110%] -rotate-[4deg] scale-[1.05] 3xl:scale-[1.15]">
+      <div className={`flex flex-col gap-4 sm:gap-5 3xl:gap-8 ${isReducedExperience ? 'w-full scale-100' : 'w-[110%] -rotate-[4deg] scale-[1.05] 3xl:scale-[1.15]'}`}>
         {/* Row 1 */}
         <div className="flex gap-4 sm:gap-5 overflow-x-hidden overflow-y-visible w-full py-1">
-          <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '30s' }}>
+          <div className={`flex shrink-0 ${rowAnimationClass('left')} items-center gap-4 sm:gap-5`} style={{ animationDuration: '30s' }}>
             {row1.map((item, i) => <TechIcon key={`r1-${i}`} {...item} />)}
           </div>
-          <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '30s' }}>
+          {!isReducedExperience && <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '30s' }}>
             {row1.map((item, i) => <TechIcon key={`r1-d-${i}`} {...item} />)}
-          </div>
+          </div>}
         </div>
     
         {/* Row 2 */}
         <div className="flex gap-4 sm:gap-5 overflow-x-hidden overflow-y-visible w-full py-1">
-          <div className="flex shrink-0 animate-marquee-reverse items-center gap-4 sm:gap-5" style={{ animationDuration: '35s' }}>
+          <div className={`flex shrink-0 ${rowAnimationClass('right')} items-center gap-4 sm:gap-5`} style={{ animationDuration: '35s' }}>
             {row2.map((item, i) => <TechIcon key={`r2-${i}`} {...item} />)}
           </div>
-          <div className="flex shrink-0 animate-marquee-reverse items-center gap-4 sm:gap-5" style={{ animationDuration: '35s' }}>
+          {!isReducedExperience && <div className="flex shrink-0 animate-marquee-reverse items-center gap-4 sm:gap-5" style={{ animationDuration: '35s' }}>
             {row2.map((item, i) => <TechIcon key={`r2-d-${i}`} {...item} />)}
-          </div>
+          </div>}
         </div>
 
         {/* Row 3 */}
         <div className="flex gap-4 sm:gap-5 overflow-x-hidden overflow-y-visible w-full py-1">
-          <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '40s' }}>
+          <div className={`flex shrink-0 ${rowAnimationClass('left')} items-center gap-4 sm:gap-5`} style={{ animationDuration: '40s' }}>
             {row3.map((item, i) => <TechIcon key={`r3-${i}`} {...item} />)}
           </div>
-          <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '40s' }}>
+          {!isReducedExperience && <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '40s' }}>
             {row3.map((item, i) => <TechIcon key={`r3-d-${i}`} {...item} />)}
-          </div>
+          </div>}
         </div>
 
         {/* Row 4 */}
         <div className="flex gap-4 sm:gap-5 overflow-x-hidden overflow-y-visible w-full py-1">
-          <div className="flex shrink-0 animate-marquee-reverse items-center gap-4 sm:gap-5" style={{ animationDuration: '28s' }}>
+          <div className={`flex shrink-0 ${rowAnimationClass('right')} items-center gap-4 sm:gap-5`} style={{ animationDuration: '28s' }}>
             {row4.map((item, i) => <TechIcon key={`r4-${i}`} {...item} />)}
           </div>
-          <div className="flex shrink-0 animate-marquee-reverse items-center gap-4 sm:gap-5" style={{ animationDuration: '28s' }}>
+          {!isReducedExperience && <div className="flex shrink-0 animate-marquee-reverse items-center gap-4 sm:gap-5" style={{ animationDuration: '28s' }}>
             {row4.map((item, i) => <TechIcon key={`r4-d-${i}`} {...item} />)}
-          </div>
+          </div>}
         </div>
 
         {/* Row 5 */}
         <div className="flex gap-4 sm:gap-5 overflow-x-hidden overflow-y-visible w-full py-1">
-          <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '32s' }}>
+          <div className={`flex shrink-0 ${rowAnimationClass('left')} items-center gap-4 sm:gap-5`} style={{ animationDuration: '32s' }}>
             {row5.map((item, i) => <TechIcon key={`r5-${i}`} {...item} />)}
           </div>
-          <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '32s' }}>
+          {!isReducedExperience && <div className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-5" style={{ animationDuration: '32s' }}>
             {row5.map((item, i) => <TechIcon key={`r5-d-${i}`} {...item} />)}
-          </div>
+          </div>}
         </div>
       </div>
     </div>
